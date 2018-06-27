@@ -1,1 +1,162 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+  select{
+  width:100%;
+}
+div{
+  font-size:50px;
+}
+</style>
+</head>
+<body>
+  <div>
+    <div>販賣的人類</div>
+    <select id="device" name="sfsname" class="dropkick">
+     <!-- <option value="1">請選擇</option>
+     <option value="2">育豪</option>
+     <option value="3">阿瑋</option> -->
+    </select>
+  </div>
+  
+  <div>
+    <div>
+      機機長度
+    </div>
+    <select id="model" name="sfsname" class="dropkick">
+     <!-- <option value="1">請選擇 </option>
+     <option value="2">64G</option>
+     <option value="3">256G</option> -->
+    </select>
+  </div>
+  <button class="do">確定</button>
+  <div class="stage">
+    
+  </div>
+  
+  
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+  
+$( document ).ready(function() {
+var DeviceName,DeviceModel,DeviceMoney,a
+var data =  {
+  "members" : [
+    {
+      "name" : "育豪",
+      "age" : "1",
+      "secretIdentity" : "Dan Jukes",
+      "powers" : [
+        {
+          "len":"5公分",
+          "money":"10元"
+        },
+        {
+          "len":"7公分",
+          "money":"11元"
+        }
+      ]
+    },
+    {
+      "name" : "阿瑋",
+      "age" : "2",
+      "secretIdentity" : "Dan Jukes",
+      "powers" : [
+        {
+          "len":"30公分",
+          "money":"999元"
+        },
+        {
+          "len":"35公分",
+          "money":"1204元"
+        }
+      ]
+    }
+  
+  ]
+}
+
+
+
+
+SetDevice();
+
+
+function SetDevice(){
+  $("#device").html("")
+
+  $("#device").append('<option value=0>請選擇</option>')
+  for(var i in data.members){
+    var a = parseInt(i)+1
+    $("#device").append('<option value='+ a + '>'+ data.members[i].name +'</option>')
+  }
+  $("#device").change(function(){
+     $("#model").html("");
+    SetModel(this.value)
+  })
+}
+function SetModel(sn){
+ $("#model").append('<option value=0>請選擇</option>');
+ for(var i in data.members){
+   if(data.members[i].age==sn){
+       for(var j in data.members[i].powers){
+         var a = parseInt(i)+1
+         $("#model").append('<option title='+data.members[i].powers[j].money +' value='+ a + '>'+ data.members[i].powers[j].len +'</option>')
+       }
+   }
+ }
+}
+
+
+
+$("button").click(function(){
+  $(".stage").html("");
+  DeviceName = "";
+  DeviceModel = "";
+  
+  $("#device").find(":selected").each(function() {
+    //alert(this.text);    
+    //alert(this.value);   
+    if(this.value=="0"){
+      alert("你還沒選擇人類唷");
+    }else{
+      DeviceName = this.text;
+    }
+  });
+  $("#model").find(":selected").each(function() {
+    //alert(this.text);    
+    //alert(this.value);   
+    if(this.value=="0"){
+      alert("你還沒選擇規格唷");
+    }else{
+      DeviceModel = this.text;
+      DeviceMoney=this.title;
+    }
+  });
+  if(DeviceName&&DeviceModel!==""){
+    $(".stage").append(
+                $("<div>").append(DeviceName)
+            ).append(
+                $("<div>").append(DeviceModel)
+            )
+            .append(
+                $("<div>").append(DeviceMoney)
+            )
+  }
+
+
+  
+})
+
+  
+});
+ </script>
+</body>
+</html>
